@@ -2,7 +2,6 @@ package com.topawar.manage.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.topawar.manage.annotation.Page;
 import com.topawar.manage.common.BaseResponse;
 import com.topawar.manage.common.ResultUtil;
 import com.topawar.manage.domain.User;
@@ -56,8 +55,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     @Override
     public BaseResponse<Map<String, Object>> getUserList(PageParam pageParam) {
         Map<String, Object> resultMap = new HashMap<>();
-        QueryWrapper<User> userQueryWrapper = new QueryWrapper<>();
-        PageFilter pageFilter = pageParam.getPageFilter(pageParam, userMapper.selectList(userQueryWrapper));
+        PageFilter pageFilter = pageParam.getPageFilter(pageParam, userMapper.selectList(pageParam));
         List data = pageFilter.getData();
         if (null == data){
             throw new GlobalException(ERROR_USER_DOES_NOT_EXIST.getMsg(), ERROR_USER_DOES_NOT_EXIST.getCode());
