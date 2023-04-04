@@ -2,6 +2,7 @@ package com.topawar.manage.controller;
 
 import com.topawar.manage.common.BaseResponse;
 import com.topawar.manage.domain.request.LoginParam;
+import com.topawar.manage.domain.request.PageParam;
 import com.topawar.manage.domain.request.SearchUserParam;
 import com.topawar.manage.exception.GlobalException;
 import com.topawar.manage.service.UserService;
@@ -33,9 +34,13 @@ public class UserController {
     }
 
     @PostMapping("/getUserList")
-    public BaseResponse getUserList(){
-
-        return userService.getUserList();
+    public BaseResponse getUserList(PageParam pageParam){
+        if (pageParam.getPageNum() == 0 && pageParam.getPageSize() == 0) {
+            pageParam.setPageNum(1);
+            pageParam.setPageSize(5);
+            return userService.getUserList(pageParam);
+        }
+        return userService.getUserList(pageParam);
     }
 
     @PostMapping("searchUser")

@@ -24,4 +24,9 @@
         effectiveTag,imageurl,`role`,create_time,
         update_time
     </sql>
+
+    <select id="selectList" resultType="com.topawar.manage.domain.User">
+        select *
+        from user
+    </select>
 </mapper>

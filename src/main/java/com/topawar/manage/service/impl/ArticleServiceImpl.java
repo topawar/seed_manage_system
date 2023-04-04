@@ -2,20 +2,19 @@ package com.topawar.manage.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import com.topawar.manage.common.BaseResponse;
 import com.topawar.manage.common.ResultUtil;
 import com.topawar.manage.domain.Article;
+import com.topawar.manage.domain.pojo.PageFilter;
 import com.topawar.manage.domain.request.PageParam;
 import com.topawar.manage.exception.GlobalException;
 import com.topawar.manage.mapper.ArticleMapper;
 import com.topawar.manage.service.ArticleService;
 import jakarta.annotation.Resource;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import static com.topawar.manage.common.ResponseCode.ERROR;
@@ -27,22 +26,21 @@ import static com.topawar.manage.common.ResponseCode.ERROR_PARAM_NULL;
  * @createDate 2023-03-27 23:25:16
  */
 @Service
+@Slf4j
 public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article>
         implements ArticleService {
 
     @Resource
     private ArticleMapper articleMapper;
 
+
     @Override
     public BaseResponse<Map<String, Object>> getArticleList(PageParam pageParam) {
         Map<String, Object> resultMap = new HashMap<>();
-        PageHelper.startPage(pageParam.getPageNum(), pageParam.getPageSize());
         QueryWrapper<Article> articleQueryWrapper = new QueryWrapper<>();
-        PageInfo<Article> pageInfo = new PageInfo<>(articleMapper.selectList(articleQueryWrapper));
-        List<Article> infoList = pageInfo.getList();
-        long total = pageInfo.getPages();
-        resultMap.put("pageList", infoList);
-        resultMap.put("total", total);
+        PageFilter pageFilter = pageParam.getPageFilter(pageParam,articleMapper.selectList(pageParam));
+        resultMap.put("pageList", pageFilter.getData());
+        resultMap.put("total", pageFilter.getPages());
         return ResultUtil.ok(resultMap);
     }
 

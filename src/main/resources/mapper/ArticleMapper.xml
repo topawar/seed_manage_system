@@ -21,4 +21,9 @@
         catalogue,content,article_kind,
         pointnum,favoritenum,imageurl
     </sql>
+
+    <select id="selectList" resultType="com.topawar.manage.domain.Article">
+        select *
+        from article
+    </select>
 </mapper>

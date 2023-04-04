@@ -4,9 +4,11 @@ import com.topawar.manage.common.BaseResponse;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.topawar.manage.domain.User;
 import com.topawar.manage.domain.request.LoginParam;
+import com.topawar.manage.domain.request.PageParam;
 import com.topawar.manage.domain.request.SearchUserParam;
 
 import java.util.List;
+import java.util.Map;
 
 /**
 * @author 34424
@@ -22,7 +24,7 @@ public interface UserService extends IService<User> {
      */
     BaseResponse<User> login(LoginParam loginParam);
 
-    BaseResponse<List<User>> getUserList();
+    BaseResponse<Map<String, Object>> getUserList(PageParam pageParam);
 
     BaseResponse<List<User>> searchUser(SearchUserParam searchUserParam);
 }

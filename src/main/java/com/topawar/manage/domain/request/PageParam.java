@@ -1,15 +1,11 @@
 package com.topawar.manage.domain.request;
 
-import lombok.Data;
+import com.topawar.manage.domain.pojo.PageFilter;
+import lombok.*;
 
 /**
  * @author: topawar
  * @date: 2023/03/28 10:52
  */
-@Data
-public class PageParam {
-
-    int pageNum;
-
-    int pageSize;
+public class PageParam extends PageFilter {
 }

@@ -1,5 +1,6 @@
 package com.topawar.manage.service;
 
+import com.topawar.manage.annotation.Page;
 import com.topawar.manage.common.BaseResponse;
 import com.topawar.manage.domain.Article;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -14,7 +15,6 @@ import java.util.Map;
 * @createDate 2023-03-27 23:25:16
 */
 public interface ArticleService extends IService<Article> {
-
     BaseResponse<Map<String,Object>> getArticleList(PageParam pageParam);
 
     BaseResponse deleteArticleById(int article_id);

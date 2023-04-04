@@ -2,10 +2,13 @@ package com.topawar.manage.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.topawar.manage.annotation.Page;
 import com.topawar.manage.common.BaseResponse;
 import com.topawar.manage.common.ResultUtil;
 import com.topawar.manage.domain.User;
+import com.topawar.manage.domain.pojo.PageFilter;
 import com.topawar.manage.domain.request.LoginParam;
+import com.topawar.manage.domain.request.PageParam;
 import com.topawar.manage.domain.request.SearchUserParam;
 import com.topawar.manage.exception.GlobalException;
 import com.topawar.manage.mapper.UserMapper;
@@ -14,7 +17,9 @@ import jakarta.annotation.Resource;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static com.topawar.manage.common.ResponseCode.ERROR_PARAM_NULL;
 import static com.topawar.manage.common.ResponseCode.ERROR_USER_DOES_NOT_EXIST;
@@ -49,14 +54,18 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     }
 
     @Override
-    public BaseResponse<List<User>> getUserList() {
-        List<User> users = userMapper.selectList(null);
-
-        if (null == users){
+    public BaseResponse<Map<String, Object>> getUserList(PageParam pageParam) {
+        Map<String, Object> resultMap = new HashMap<>();
+        QueryWrapper<User> userQueryWrapper = new QueryWrapper<>();
+        PageFilter pageFilter = pageParam.getPageFilter(pageParam, userMapper.selectList(userQueryWrapper));
+        List data = pageFilter.getData();
+        if (null == data){
             throw new GlobalException(ERROR_USER_DOES_NOT_EXIST.getMsg(), ERROR_USER_DOES_NOT_EXIST.getCode());
         }
 
-        return ResultUtil.ok(users);
+        resultMap.put("pageList", data);
+        resultMap.put("total", pageFilter.getPages());
+        return ResultUtil.ok(resultMap);
     }
 
     @Override

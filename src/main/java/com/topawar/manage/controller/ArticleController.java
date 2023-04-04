@@ -1,5 +1,6 @@
 package com.topawar.manage.controller;
 
+import com.topawar.manage.annotation.Page;
 import com.topawar.manage.common.BaseResponse;
 import com.topawar.manage.domain.request.PageParam;
 import com.topawar.manage.exception.GlobalException;
@@ -31,7 +32,6 @@ public class ArticleController {
             pageParam.setPageSize(5);
             return articleService.getArticleList(pageParam);
         }
-
         return articleService.getArticleList(pageParam);
     }
 
