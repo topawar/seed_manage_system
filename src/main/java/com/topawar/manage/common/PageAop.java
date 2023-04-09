@@ -37,7 +37,6 @@ public class PageAop {
 
     @Around("annotation()")
     public Object around(ProceedingJoinPoint proceedingJoinPoint) {
-        log.info("进入切点方法");
         //当前页码
         int pageNum = 1;
         //每页记录数
@@ -63,7 +62,6 @@ public class PageAop {
             pageFilter.setPages(page.getPages());
             pageFilter.setPageSize(page.getPageSize());
             pageFilter.setTotal(page.getTotal());
-            log.info("切点后"+result);
         } catch (Exception e) {
             log.info("查询数据库异常" + e);
         } catch (Throwable e) {

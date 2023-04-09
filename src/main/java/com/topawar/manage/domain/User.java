@@ -76,9 +76,4 @@ public class User implements Serializable {
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
 
-    public String getCreate_time() {
-        String format_Create_time = DateFormatUtils.format(create_time, "YYYY/MM/dd HH:mm:ss");
-        return format_Create_time;
-    }
-
 }

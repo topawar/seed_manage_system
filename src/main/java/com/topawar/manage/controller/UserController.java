@@ -4,6 +4,7 @@ import com.topawar.manage.common.BaseResponse;
 import com.topawar.manage.domain.request.LoginParam;
 import com.topawar.manage.domain.request.PageParam;
 import com.topawar.manage.domain.request.SearchUserParam;
+import com.topawar.manage.domain.request.UpdateUserParam;
 import com.topawar.manage.exception.GlobalException;
 import com.topawar.manage.service.UserService;
 import jakarta.annotation.Resource;
@@ -49,5 +50,21 @@ public class UserController {
             throw new GlobalException(ERROR_PARAM_NULL.getMsg(), ERROR_PARAM_NULL.getCode());
         }
         return userService.searchUser(searchUserParam);
+    }
+
+    @PostMapping("/deleteUserById")
+    public BaseResponse deleteUserById(String id){
+        if (StringUtils.isAnyBlank(id)){
+            throw new GlobalException(ERROR_PARAM_NULL.getMsg(),ERROR_PARAM_NULL.getCode());
+        }
+        return userService.deleteUserById(id);
+    }
+
+    @PostMapping("/updateUserById")
+    public BaseResponse updateUserById(UpdateUserParam updateUserParam){
+        if (StringUtils.isAnyBlank(updateUserParam.getId())){
+            throw new GlobalException(ERROR_PARAM_NULL.getMsg(),ERROR_PARAM_NULL.getCode());
+        }
+        return  userService.updateUserById(updateUserParam);
     }
 }

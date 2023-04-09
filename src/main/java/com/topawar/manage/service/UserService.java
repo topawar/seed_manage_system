@@ -6,6 +6,7 @@ import com.topawar.manage.domain.User;
 import com.topawar.manage.domain.request.LoginParam;
 import com.topawar.manage.domain.request.PageParam;
 import com.topawar.manage.domain.request.SearchUserParam;
+import com.topawar.manage.domain.request.UpdateUserParam;
 
 import java.util.List;
 import java.util.Map;
@@ -27,4 +28,8 @@ public interface UserService extends IService<User> {
     BaseResponse<Map<String, Object>> getUserList(PageParam pageParam);
 
     BaseResponse<List<User>> searchUser(SearchUserParam searchUserParam);
+
+    BaseResponse<Integer> deleteUserById(String id);
+
+    BaseResponse<Integer> updateUserById(UpdateUserParam updateUserParam);
 }
