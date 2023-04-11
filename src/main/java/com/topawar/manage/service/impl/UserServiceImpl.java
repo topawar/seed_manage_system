@@ -3,7 +3,7 @@ package com.topawar.manage.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.topawar.manage.common.BaseResponse;
-import com.topawar.manage.common.ResultUtil;
+import com.topawar.manage.common.util.ResultUtil;
 import com.topawar.manage.domain.User;
 import com.topawar.manage.domain.pojo.PageFilter;
 import com.topawar.manage.domain.request.LoginParam;
@@ -15,7 +15,6 @@ import com.topawar.manage.mapper.UserMapper;
 import com.topawar.manage.service.UserService;
 import jakarta.annotation.Resource;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.time.DateFormatUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -102,6 +101,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         updateUser.setAge(updateUserParam.getAge());
         updateUser.setEffectiveTag(updateUserParam.getEffectiveTag());
         updateUser.setRole(updateUserParam.getRole());
+        updateUser.setImageurl(updateUserParam.getImageurl());
         updateUser.setUpdate_time(updateTime);
         int update = userMapper.updateById(updateUser);
         if (update < 0) {

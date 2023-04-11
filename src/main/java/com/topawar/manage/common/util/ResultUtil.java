@@ -1,4 +1,7 @@
-package com.topawar.manage.common;
+package com.topawar.manage.common.util;
+
+import com.topawar.manage.common.BaseResponse;
+import com.topawar.manage.common.ResponseCode;
 
 import static com.topawar.manage.common.ResponseCode.SUCCESS;
 

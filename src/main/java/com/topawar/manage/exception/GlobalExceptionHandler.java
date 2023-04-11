@@ -1,7 +1,7 @@
 package com.topawar.manage.exception;
 
 import com.topawar.manage.common.BaseResponse;
-import com.topawar.manage.common.ResultUtil;
+import com.topawar.manage.common.util.ResultUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;

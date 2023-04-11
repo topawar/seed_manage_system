@@ -1,11 +1,13 @@
 package com.topawar.manage.common;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.topawar.manage.SeedManageSystemApplication;
 import com.topawar.manage.domain.User;
 import com.topawar.manage.mapper.UserMapper;
 import jakarta.annotation.Resource;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 
@@ -14,6 +16,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  * @date: 2022/12/14 20:20
  */
 @RunWith(SpringJUnit4ClassRunner.class)
+@SpringBootTest(classes = SeedManageSystemApplication.class)
 public class ResponseCodeTest {
 
     @Resource

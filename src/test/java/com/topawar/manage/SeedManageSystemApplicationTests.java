@@ -5,6 +5,7 @@ import com.topawar.manage.domain.User;
 import com.topawar.manage.mapper.UserMapper;
 import jakarta.annotation.Resource;
 import org.junit.jupiter.api.Test;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.test.context.SpringBootTest;
 
 

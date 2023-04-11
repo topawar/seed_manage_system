@@ -1,6 +1,8 @@
 package com.topawar.manage.controller;
 
 import com.topawar.manage.common.BaseResponse;
+import com.topawar.manage.common.util.CosUtil;
+import com.topawar.manage.common.util.ResultUtil;
 import com.topawar.manage.domain.request.LoginParam;
 import com.topawar.manage.domain.request.PageParam;
 import com.topawar.manage.domain.request.SearchUserParam;
@@ -10,6 +12,7 @@ import com.topawar.manage.service.UserService;
 import jakarta.annotation.Resource;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 
 import static com.topawar.manage.common.ResponseCode.ERROR_PARAM_NULL;
@@ -24,7 +27,7 @@ import static com.topawar.manage.common.ResponseCode.ERROR_PARAM_NULL;
 public class UserController {
 
     @Resource
-    private  UserService userService;
+    private UserService userService;
 
     @PostMapping("/login")
     public BaseResponse login(@RequestBody LoginParam loginParam) {
@@ -35,7 +38,7 @@ public class UserController {
     }
 
     @PostMapping("/getUserList")
-    public BaseResponse getUserList(PageParam pageParam){
+    public BaseResponse getUserList(PageParam pageParam) {
         if (pageParam.getPageNum() == 0 && pageParam.getPageSize() == 0) {
             pageParam.setPageNum(1);
             pageParam.setPageSize(5);
@@ -45,7 +48,7 @@ public class UserController {
     }
 
     @PostMapping("searchUser")
-    public BaseResponse searchUser(@RequestBody SearchUserParam searchUserParam){
+    public BaseResponse searchUser(@RequestBody SearchUserParam searchUserParam) {
         if (StringUtils.isAnyBlank(searchUserParam.getName())) {
             throw new GlobalException(ERROR_PARAM_NULL.getMsg(), ERROR_PARAM_NULL.getCode());
         }
@@ -53,18 +56,26 @@ public class UserController {
     }
 
     @PostMapping("/deleteUserById")
-    public BaseResponse deleteUserById(String id){
-        if (StringUtils.isAnyBlank(id)){
-            throw new GlobalException(ERROR_PARAM_NULL.getMsg(),ERROR_PARAM_NULL.getCode());
+    public BaseResponse deleteUserById(String id) {
+        if (StringUtils.isAnyBlank(id)) {
+            throw new GlobalException(ERROR_PARAM_NULL.getMsg(), ERROR_PARAM_NULL.getCode());
         }
         return userService.deleteUserById(id);
     }
 
     @PostMapping("/updateUserById")
-    public BaseResponse updateUserById(UpdateUserParam updateUserParam){
-        if (StringUtils.isAnyBlank(updateUserParam.getId())){
-            throw new GlobalException(ERROR_PARAM_NULL.getMsg(),ERROR_PARAM_NULL.getCode());
+    public BaseResponse updateUserById(UpdateUserParam updateUserParam) {
+        if (StringUtils.isAnyBlank(updateUserParam.getId())) {
+            throw new GlobalException(ERROR_PARAM_NULL.getMsg(), ERROR_PARAM_NULL.getCode());
         }
-        return  userService.updateUserById(updateUserParam);
+        return userService.updateUserById(updateUserParam);
+    }
+
+    @PostMapping("/uploadAvatar")
+    public BaseResponse uploadAvatar(@RequestParam("file") MultipartFile multipartFile) {
+        if (multipartFile == null){
+            throw new GlobalException(ERROR_PARAM_NULL.getMsg(), ERROR_PARAM_NULL.getCode());
+        }
+        return ResultUtil.ok(CosUtil.PutCosObjectFile(multipartFile));
     }
 }

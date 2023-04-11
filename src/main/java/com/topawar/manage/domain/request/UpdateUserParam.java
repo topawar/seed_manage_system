@@ -51,7 +51,10 @@ public class UpdateUserParam {
      */
     private Integer role;
 
-
+    /**
+     * 用户头像
+     */
+    private String imageurl;
     /**
      * 修改时日期
      */

@@ -3,7 +3,7 @@ package com.topawar.manage.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.topawar.manage.common.BaseResponse;
-import com.topawar.manage.common.ResultUtil;
+import com.topawar.manage.common.util.ResultUtil;
 import com.topawar.manage.domain.Article;
 import com.topawar.manage.domain.pojo.PageFilter;
 import com.topawar.manage.domain.request.PageParam;

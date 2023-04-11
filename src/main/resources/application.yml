@@ -7,6 +7,16 @@ spring:
     username: root
     password: root
     driver-class-name: com.p6spy.engine.spy.P6SpyDriver
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      password: root
+      lettuce:
+        pool:
+          max-active: 16
+          min-idle: 8
+          max-idle: 16
 mybatis-plus:
   configuration:
     map-underscore-to-camel-case: false
