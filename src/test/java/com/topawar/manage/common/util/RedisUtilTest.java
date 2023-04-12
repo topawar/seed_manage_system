@@ -23,4 +23,10 @@ public class RedisUtilTest {
         long time = 200;
         redisUtil.expire(key, time);
     }
+
+    @Test
+    public void haskeyTest(){
+        String key = "secretKey";
+        redisUtil.set(key,"VmofJwMXVFl37wXu3xd5JI3atypSr2zi",0);
+    }
 }

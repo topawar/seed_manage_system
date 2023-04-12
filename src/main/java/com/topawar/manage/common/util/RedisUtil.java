@@ -17,8 +17,63 @@ public class RedisUtil {
     @Resource
     private RedisTemplate<String, Object> redisTemplate;
 
+    /**
+     * @param key
+     * @param time
+     * @return 设置key的过期时间
+     */
     public Boolean expire(String key, long time) {
         Assert.notNull(key, "key is not null");
         return redisTemplate.expire(key, time, TimeUnit.SECONDS);
     }
+
+    /**
+     * @param key
+     * @return 获取key的过期时间
+     */
+    public Long getExprie(String key) {
+        Assert.notNull(key, "key is not null");
+        return redisTemplate.getExpire(key);
+    }
+
+    /**
+     * @param key
+     * @return 获取key的是否存在
+     */
+    public Boolean hasKey(String key) {
+        Assert.notNull(key, "key is not null");
+        return redisTemplate.hasKey(key);
+    }
+
+
+    /**
+     * @param key
+     * @return key持久化
+     */
+    public Boolean persist(String key) {
+        Assert.notNull(key, "key is not null");
+        return redisTemplate.boundValueOps(key).persist();
+    }
+
+    /**
+     * @param key
+     * @param value
+     */
+    public void set(String key, Object value, long time) {
+        Assert.notNull(key, "key is not null");
+        if (time > 0)
+            redisTemplate.opsForValue().set(key, value, time);
+        redisTemplate.opsForValue().set(key, value);
+    }
+
+    /**
+     * @param key 根据key获取value
+     */
+    public Object get(String key) {
+        Assert.notNull(key, "key is not null");
+        return redisTemplate.opsForValue().get(key);
+    }
+
+
+
 }

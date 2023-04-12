@@ -29,6 +29,8 @@ public class UserController {
     @Resource
     private UserService userService;
 
+    @Resource CosUtil cosUtil;
+
     @PostMapping("/login")
     public BaseResponse login(@RequestBody LoginParam loginParam) {
         if (StringUtils.isAnyBlank(loginParam.getName(), loginParam.getPassword())) {
@@ -76,6 +78,6 @@ public class UserController {
         if (multipartFile == null){
             throw new GlobalException(ERROR_PARAM_NULL.getMsg(), ERROR_PARAM_NULL.getCode());
         }
-        return ResultUtil.ok(CosUtil.PutCosObjectFile(multipartFile));
+        return ResultUtil.ok(cosUtil.PutCosObjectFile(multipartFile));
     }
 }
