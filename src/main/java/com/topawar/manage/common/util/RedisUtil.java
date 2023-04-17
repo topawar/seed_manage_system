@@ -59,10 +59,12 @@ public class RedisUtil {
      * @param key
      * @param value
      */
-    public void set(String key, Object value, long time) {
+    public void set(String key, Object value, long time,TimeUnit timeUnit) {
         Assert.notNull(key, "key is not null");
-        if (time > 0)
-            redisTemplate.opsForValue().set(key, value, time);
+        if (time > 0){
+            redisTemplate.opsForValue().set(key, value, time,timeUnit);
+            return;
+        }
         redisTemplate.opsForValue().set(key, value);
     }
 

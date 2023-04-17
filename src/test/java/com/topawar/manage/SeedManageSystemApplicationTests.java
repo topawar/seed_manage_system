@@ -5,7 +5,6 @@ import com.topawar.manage.domain.User;
 import com.topawar.manage.mapper.UserMapper;
 import jakarta.annotation.Resource;
 import org.junit.jupiter.api.Test;
-import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.test.context.SpringBootTest;
 
 
@@ -22,8 +21,8 @@ class SeedManageSystemApplicationTests {
     @Test
     public void getcodeTest() {
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("name","万叶");
-        queryWrapper.eq("password","WY20030125");
+        queryWrapper.lambda().eq(User::getName,"万叶");
+        queryWrapper.lambda().eq(User::getPassword,"WY20030125");
         User user = userMapper.selectOne(queryWrapper);
         System.out.println(user);
     }

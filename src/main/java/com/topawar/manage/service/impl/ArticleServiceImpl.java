@@ -37,8 +37,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article>
     @Override
     public BaseResponse<Map<String, Object>> getArticleList(PageParam pageParam) {
         Map<String, Object> resultMap = new HashMap<>();
-        QueryWrapper<Article> articleQueryWrapper = new QueryWrapper<>();
-        PageFilter pageFilter = pageParam.getPageFilter(pageParam,articleMapper.selectList(pageParam));
+        PageFilter pageFilter = pageParam.getPageFilter(pageParam,articleMapper.selectListPage(pageParam));
         resultMap.put("pageList", pageFilter.getData());
         resultMap.put("total", pageFilter.getPages());
         return ResultUtil.ok(resultMap);

@@ -1,5 +1,6 @@
 package com.topawar.manage.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.topawar.manage.common.BaseResponse;
@@ -22,8 +23,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.topawar.manage.common.ResponseCode.ERROR_PARAM_NULL;
-import static com.topawar.manage.common.ResponseCode.ERROR_USER_DOES_NOT_EXIST;
+import static com.topawar.manage.common.ResponseCode.*;
 
 /**
  * @author 34424
@@ -43,10 +43,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         if (StringUtils.isAnyBlank(loginParam.getName(), loginParam.getPassword())) {
             throw new GlobalException(ERROR_PARAM_NULL.getMsg(), ERROR_PARAM_NULL.getCode());
         }
-        QueryWrapper<User> userQueryWrapper = new QueryWrapper<>();
-        userQueryWrapper.eq("name", loginParam.getName());
-        userQueryWrapper.eq("password", loginParam.getPassword());
-        User user = userMapper.selectOne(userQueryWrapper);
+        User user = userMapper.selectOne(new QueryWrapper<User>().eq("name",loginParam.getName()).eq("password",loginParam.getPassword()));
         if (null == user) {
             throw new GlobalException(ERROR_USER_DOES_NOT_EXIST.getMsg(), ERROR_USER_DOES_NOT_EXIST.getCode());
         }
@@ -57,10 +54,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     @Override
     public BaseResponse<Map<String, Object>> getUserList(PageParam pageParam) {
         Map<String, Object> resultMap = new HashMap<>();
-        PageFilter pageFilter = pageParam.getPageFilter(pageParam, userMapper.selectList(pageParam));
+        PageFilter pageFilter = pageParam.getPageFilter(pageParam, userMapper.selectListPage(pageParam));
         List data = pageFilter.getData();
         if (null == data) {
-            throw new GlobalException(ERROR_USER_DOES_NOT_EXIST.getMsg(), ERROR_USER_DOES_NOT_EXIST.getCode());
+            throw new GlobalException(ERROR_LIST_IS_EMPTY.getMsg(), ERROR_LIST_IS_EMPTY.getCode());
         }
 
         resultMap.put("pageList", data);

@@ -4,6 +4,7 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.topawar.manage.domain.pojo.PageFilter;
+import com.topawar.manage.exception.GlobalException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ObjectUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -53,19 +54,16 @@ public class PageAop {
         }
         Object result = null;
         try {
-
             assert pageFilter != null;
-            log.info("切点前"+pageFilter.toString());
+            log.info("切点前" + pageFilter.toString());
             Page<Object> page = PageHelper.startPage(pageFilter.getPageNum(), pageFilter.getPageSize());
             result = proceedingJoinPoint.proceed(args);
             pageFilter.setPageNum(page.getPageNum());
             pageFilter.setPages(page.getPages());
             pageFilter.setPageSize(page.getPageSize());
             pageFilter.setTotal(page.getTotal());
-        } catch (Exception e) {
-            log.info("查询数据库异常" + e);
         } catch (Throwable e) {
-            throw new RuntimeException(e);
+            throw new GlobalException(e.getMessage(),ResponseCode.ERROR.getCode());
         }
         return result;
     }

@@ -32,7 +32,7 @@ public class UserController {
     @Resource CosUtil cosUtil;
 
     @PostMapping("/login")
-    public BaseResponse login(@RequestBody LoginParam loginParam) {
+    public BaseResponse login(LoginParam loginParam) {
         if (StringUtils.isAnyBlank(loginParam.getName(), loginParam.getPassword())) {
             throw new GlobalException(ERROR_PARAM_NULL.getMsg(), ERROR_PARAM_NULL.getCode());
         }
@@ -49,8 +49,8 @@ public class UserController {
         return userService.getUserList(pageParam);
     }
 
-    @PostMapping("searchUser")
-    public BaseResponse searchUser(@RequestBody SearchUserParam searchUserParam) {
+    @PostMapping("/searchUser")
+    public BaseResponse searchUser(SearchUserParam searchUserParam) {
         if (StringUtils.isAnyBlank(searchUserParam.getName())) {
             throw new GlobalException(ERROR_PARAM_NULL.getMsg(), ERROR_PARAM_NULL.getCode());
         }
@@ -78,6 +78,6 @@ public class UserController {
         if (multipartFile == null){
             throw new GlobalException(ERROR_PARAM_NULL.getMsg(), ERROR_PARAM_NULL.getCode());
         }
-        return ResultUtil.ok(cosUtil.PutCosObjectFile(multipartFile));
+        return ResultUtil.ok(cosUtil.putCosObjectFile(multipartFile));
     }
 }

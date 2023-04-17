@@ -15,7 +15,7 @@ import java.util.List;
 */
 public interface ArticleMapper extends BaseMapper<Article> {
     @Page
-    List<Article> selectList(PageParam pageParam);
+    List<Article> selectListPage(PageParam pageParam);
 }
 
 
