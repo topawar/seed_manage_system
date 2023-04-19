@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.topawar.manage.common.BaseResponse;
+import com.topawar.manage.common.util.JwtUtil;
+import com.topawar.manage.common.util.RedisUtil;
 import com.topawar.manage.common.util.ResultUtil;
 import com.topawar.manage.domain.User;
 import com.topawar.manage.domain.pojo.PageFilter;
@@ -18,10 +20,8 @@ import jakarta.annotation.Resource;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 import static com.topawar.manage.common.ResponseCode.*;
 
@@ -37,9 +37,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     @Resource
     private UserMapper userMapper;
 
-    @Override
-    public BaseResponse<User> login(LoginParam loginParam) {
+    @Resource
+    private RedisUtil redisUtil;
 
+    @Override
+    public BaseResponse<Map<String, Object>> login(LoginParam loginParam) {
+        Map<String, Object> map = new HashMap<>();
         if (StringUtils.isAnyBlank(loginParam.getName(), loginParam.getPassword())) {
             throw new GlobalException(ERROR_PARAM_NULL.getMsg(), ERROR_PARAM_NULL.getCode());
         }
@@ -47,8 +50,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         if (null == user) {
             throw new GlobalException(ERROR_USER_DOES_NOT_EXIST.getMsg(), ERROR_USER_DOES_NOT_EXIST.getCode());
         }
+        String token = JwtUtil.generateToke(loginParam);
         User safetyUser = safetyUser(user);
-        return ResultUtil.ok(safetyUser);
+        String tokenId = UUID.randomUUID().toString();
+        redisUtil.set(tokenId,token,7, TimeUnit.DAYS);
+        map.put("userInfo",safetyUser);
+        map.put("tokenId",tokenId);
+        return ResultUtil.ok(map);
     }
 
     @Override

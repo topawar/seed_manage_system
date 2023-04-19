@@ -2,6 +2,7 @@ package com.topawar.manage.controller;
 
 import com.topawar.manage.common.BaseResponse;
 import com.topawar.manage.common.util.CosUtil;
+import com.topawar.manage.common.util.RedisUtil;
 import com.topawar.manage.common.util.ResultUtil;
 import com.topawar.manage.domain.request.LoginParam;
 import com.topawar.manage.domain.request.PageParam;
@@ -10,6 +11,7 @@ import com.topawar.manage.domain.request.UpdateUserParam;
 import com.topawar.manage.exception.GlobalException;
 import com.topawar.manage.service.UserService;
 import jakarta.annotation.Resource;
+import jakarta.servlet.http.HttpServletRequest;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -29,10 +31,20 @@ public class UserController {
     @Resource
     private UserService userService;
 
-    @Resource CosUtil cosUtil;
+    @Resource
+    CosUtil cosUtil;
+
+    @Resource
+    RedisUtil redisUtil;
 
     @PostMapping("/login")
-    public BaseResponse login(LoginParam loginParam) {
+    public BaseResponse login(LoginParam loginParam, HttpServletRequest request) {
+        String tokenId = request.getHeader("tokenId");
+        if (!StringUtils.isAnyBlank(tokenId)){
+            if (redisUtil.hasKey(tokenId)){
+                return ResultUtil.ok("The token is valid");
+            }
+        }
         if (StringUtils.isAnyBlank(loginParam.getName(), loginParam.getPassword())) {
             throw new GlobalException(ERROR_PARAM_NULL.getMsg(), ERROR_PARAM_NULL.getCode());
         }

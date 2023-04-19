@@ -76,6 +76,14 @@ public class RedisUtil {
         return redisTemplate.opsForValue().get(key);
     }
 
+    /**
+     * @param key 删除key
+     */
+    public Boolean remove(String key) {
+        Assert.notNull(key, "key is not null");
+        return redisTemplate.delete(key);
+    }
+
 
 
 }

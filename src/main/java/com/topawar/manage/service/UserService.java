@@ -23,7 +23,7 @@ public interface UserService extends IService<User> {
      * @param loginParam
      * @return 返回用户信息
      */
-    BaseResponse<User> login(LoginParam loginParam);
+    BaseResponse<Map<String, Object>> login(LoginParam loginParam);
 
     BaseResponse<Map<String, Object>> getUserList(PageParam pageParam);
 

@@ -16,7 +16,9 @@ public enum ResponseCode {
     ERROR(50000,"系统异常",""),
     ERROR_PARAM_NULL(50001, "参数为空", ""),
     ERROR_USER_DOES_NOT_EXIST(50002, "用户不存在", ""),
-    ERROR_LIST_IS_EMPTY(50003, "列表为空", "");
+    ERROR_LIST_IS_EMPTY(50003, "列表为空", ""),
+    ERROR_NOT_LOGIN(50004, "未登录", ""),
+    ERROR_TOKEN_INVALID(50005, "Token失效", "");
 
 
     private final int code;
