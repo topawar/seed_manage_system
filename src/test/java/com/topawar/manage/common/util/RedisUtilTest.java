@@ -31,8 +31,8 @@ public class RedisUtilTest {
 
     @Test
     public void haskeyTest(){
-        String key = "secretKey";
-        redisUtil.set(key,"VmofJwMXVFl37wXu3xd5JI3atypSr2zi",0,TimeUnit.SECONDS);
+        String key = "c52e2d4e-e717-4b73-adc2-48a27347d1d5";
+        redisUtil.hasKey(key);
     }
 
     @Test

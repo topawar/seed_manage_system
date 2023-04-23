@@ -19,7 +19,7 @@ public class CustomWebMvcConfigurer implements WebMvcConfigurer {
     }
 
     @Bean
-    public authenticHandlerInterceptor initAuthenticHandlerInterceptor(){
-        return new authenticHandlerInterceptor();
+    public AuthenticHandlerInterceptor initAuthenticHandlerInterceptor(){
+        return new AuthenticHandlerInterceptor();
     }
 }
