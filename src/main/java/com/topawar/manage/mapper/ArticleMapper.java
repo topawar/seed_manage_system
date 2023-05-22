@@ -1,11 +1,7 @@
 package com.topawar.manage.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.topawar.manage.annotation.Page;
 import com.topawar.manage.domain.Article;
-import com.topawar.manage.domain.request.PageParam;
-
-import java.util.List;
 
 /**
 * @author 34424
@@ -14,8 +10,6 @@ import java.util.List;
 * @Entity generator.domain.article
 */
 public interface ArticleMapper extends BaseMapper<Article> {
-    @Page
-    List<Article> selectListPage(PageParam pageParam);
 }
 
 

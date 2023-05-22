@@ -1,11 +1,9 @@
 package com.topawar.manage.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.topawar.manage.common.BaseResponse;
-import com.topawar.manage.common.util.ResultUtil;
 import com.topawar.manage.domain.Article;
-import com.topawar.manage.domain.pojo.PageFilter;
 import com.topawar.manage.domain.request.PageParam;
 import com.topawar.manage.exception.GlobalException;
 import com.topawar.manage.mapper.ArticleMapper;
@@ -14,10 +12,6 @@ import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import static com.topawar.manage.common.ResponseCode.ERROR;
 import static com.topawar.manage.common.ResponseCode.ERROR_PARAM_NULL;
 
 /**
@@ -35,16 +29,14 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article>
 
 
     @Override
-    public BaseResponse<Map<String, Object>> getArticleList(PageParam pageParam) {
-        Map<String, Object> resultMap = new HashMap<>();
-        PageFilter pageFilter = pageParam.getPageFilter(pageParam,articleMapper.selectListPage(pageParam));
-        resultMap.put("pageList", pageFilter.getData());
-        resultMap.put("total", pageFilter.getPages());
-        return ResultUtil.ok(resultMap);
+    public Page<Article> getArticleListPage(PageParam pageParam) {
+        Page<Article> articlePage = new Page<>(pageParam.getPageNum(), pageParam.getPageSize());
+        QueryWrapper<Article> queryWrapper = new QueryWrapper<>();
+        return articleMapper.selectPage(articlePage, queryWrapper);
     }
 
     @Override
-    public BaseResponse deleteArticleById(int article_id) {
+    public int deleteArticleById(int article_id) {
 
         if (article_id == 0) {
             throw new GlobalException(ERROR_PARAM_NULL.getMsg(), ERROR_PARAM_NULL.getCode());
@@ -53,10 +45,10 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article>
         int i = articleMapper.deleteById(article_id);
 
         if (i != 1) {
-            return ResultUtil.error(ERROR.getCode(),"删除失败");
+            throw new GlobalException("删除失败", ERROR_PARAM_NULL.getCode());
         }
 
-        return ResultUtil.ok(i);
+        return i;
     }
 
 }

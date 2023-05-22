@@ -19,24 +19,11 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,uid,`name`,
+        id
+        ,uid,`name`,
         `password`,gender,age,
         effectiveTag,imageurl,`role`,create_time,
         update_time
     </sql>
 
-    <select id="selectListPage" resultType="com.topawar.manage.domain.User">
-        select id,
-               uid,
-               `name`,
-               `password`,
-               gender,
-               age,
-               effectiveTag,
-               imageurl,
-               `role`,
-               create_time,
-               update_time
-        from user
-    </select>
 </mapper>

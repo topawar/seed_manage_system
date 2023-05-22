@@ -5,6 +5,7 @@ import com.topawar.manage.domain.Router;
 import com.topawar.manage.mapper.RouterMapper;
 import com.topawar.manage.service.RouterService;
 import jakarta.annotation.Resource;
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.stereotype.Service;
 
 /**
@@ -20,7 +21,7 @@ public class RouterServiceImpl extends ServiceImpl<RouterMapper, Router>
     RouterMapper routerMapper;
 
     @Override
-    public void syncRoute(Router router) {
+    public void syncRoute(@ParameterObject Router router) {
         routerMapper.insertNameOnDuplicate(router);
     }
 }

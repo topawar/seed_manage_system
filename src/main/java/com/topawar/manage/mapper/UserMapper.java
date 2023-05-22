@@ -1,17 +1,7 @@
 package com.topawar.manage.mapper;
 
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.baomidou.mybatisplus.core.toolkit.Constants;
-import com.topawar.manage.annotation.Page;
-import com.topawar.manage.domain.Article;
 import com.topawar.manage.domain.User;
-import com.topawar.manage.domain.request.PageParam;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
-
-import java.util.List;
 
 /**
  * @author topawar
@@ -21,8 +11,6 @@ import java.util.List;
  */
 public interface UserMapper extends BaseMapper<User> {
 
-    @Page
-    List<User> selectListPage(PageParam pageParam);
 }
 
 

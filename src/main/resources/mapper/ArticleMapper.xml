@@ -22,16 +22,4 @@
         pointnum,favoritenum,imageurl
     </sql>
 
-    <select id="selectListPage" resultType="com.topawar.manage.domain.Article">
-        select article_id,
-               uid,
-               title,
-               catalogue,
-               content,
-               article_kind,
-               pointnum,
-               favoritenum,
-               imageurl
-        from article
-    </select>
 </mapper>

@@ -1,6 +1,9 @@
 server:
   port: 8082
-
+  servlet:
+    session:
+      cookie:
+        domain: localhost
 spring:
   datasource:
     url: jdbc:p6spy:mysql://localhost:3306/seed?characterEncoding=utf-8
@@ -15,15 +18,29 @@ spring:
       port: 6379
       password: root
       connect-timeout: 5000
-      lettuce:
-        pool:
-          max-active: 16
-          min-idle: 8
-          max-idle: 16
+  session:
+    timeout: 86400
 mybatis-plus:
   configuration:
     map-underscore-to-camel-case: false
-pagehelper:
-  helper-dialect: mysql
-  reasonable: true
-  support-methods-arguments: true
+
+# springdoc-openapi项目配置
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: alpha
+  api-docs:
+    path: /v3/api-docs
+  group-configs:
+    - group: 'default'
+      paths-to-match: '/**'
+      packages-to-scan: com.topawar.manage.controller
+# knife4j的增强配置，不需要增强可以不配
+knife4j:
+  enable: true
+  setting:
+    language: zh_cn
+    enable-after-script: false
+
+

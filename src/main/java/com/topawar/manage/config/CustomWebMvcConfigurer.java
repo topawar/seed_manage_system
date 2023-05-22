@@ -7,19 +7,17 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 public class CustomWebMvcConfigurer implements WebMvcConfigurer {
-  
-  
-    @Override  
+
+
+    @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(initAuthenticHandlerInterceptor())
-                .addPathPatterns("/**")  
-                .excludePathPatterns(    //添加不拦截路径  
-                "/user/login"                //登录路径
-        );;  
+                .addPathPatterns("/**")
+                .excludePathPatterns("/user/login","/swagger-resources/**", "/webjars/**", "/v3/**", "/swagger-ui.html/**");
     }
 
     @Bean
-    public AuthenticHandlerInterceptor initAuthenticHandlerInterceptor(){
+    public AuthenticHandlerInterceptor initAuthenticHandlerInterceptor() {
         return new AuthenticHandlerInterceptor();
     }
 }
